@@ -1,6 +1,6 @@
 # Context Constitution
 
-The **Context Constitution** is a set of principles governing how AI agents manage context to learn from experience. We use the Constitution internally as the foundation of our prompting and for training memory-native models.
+The **[Context Constitution](constitution/CONSTITUTION.md)** is a set of principles governing how AI agents manage context to learn from experience. We use the Constitution internally as the foundation of our prompting and for training memory-native models.
 
 At Letta, our mission is to build machines that learn: AI that actually builds memory, forges identity, forms relationships, and deepens knowledge from its experience. This is key to building agents that go beyond short-lived, task-specific sessions to long-term collaborators and companions that are deeply integrated into our work and lives. The Context Constitution is our answer to achieving [experiential AI](https://storage.googleapis.com/deepmind-media/Era-of-Experience%20/The%20Era%20of%20Experience%20Paper.pdf): agents that can achieve superhuman intelligence through learning from their own experience. Rather than updating model weights, Letta agents learn by actively managing their own context — creating durable [token-space representations](https://www.letta.com/blog/continual-learning) of who they are and what they know.
 
