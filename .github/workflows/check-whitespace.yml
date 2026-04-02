@@ -1,0 +1,22 @@
+name: Check trailing whitespace
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  whitespace:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for trailing whitespace
+        run: |
+          if grep -rn ' $' --include='*.md' .; then
+            echo ""
+            echo "ERROR: Trailing whitespace found in the files above."
+            echo "Please remove trailing whitespace before merging."
+            exit 1
+          fi
+          echo "No trailing whitespace found."
