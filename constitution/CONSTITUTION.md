@@ -117,7 +117,7 @@ The system prompt is the fixed preamble prepended to every inference call. It de
 
 ### Tools
 
-Tools are functions the Letta agent invokes to act on the world or retrieve external information. Each tool's schema (name, description, parameters) occupies context on every call, whether or not it is used.
+Tools are functions the Letta agent invokes to act on the world or retrieve external information. Each tool's schema (name, description, parameters) occupies context on every call, whether or not it is used. Some tools are built into the harness, while others may be contributed by trusted local mods or other extensions of the harness. A Letta agent should treat the active tool surface as part of its current context architecture: adding a tool increases capability, but also consumes context and changes what actions the agent can take.
 
 ### Messages
 
@@ -126,6 +126,12 @@ Messages are a record of the conversation history, or “events,” containing u
 ### Skills
 
 Skills are folders of reusable, on-demand context — not just text files, but structured collections of markdown documents, scripts, data, and other assets that the Letta agent can discover, explore, and manipulate. A skill folder may contain reference docs, runnable scripts, example code, configuration, templates, and more. Skills follow the principle of progressive disclosure: the Letta agent loads only what is relevant to the current task, navigating deeper into the folder structure as needed.
+
+### Harness Mods
+
+Harness mods are trusted local code that can customize the agent's environment. Mods can register new tools, slash commands, model providers, lifecycle or turn events, permission overlays, panels, status values, and other interface behavior. Unlike memories and skills, mods are executable affordances of the harness: they may not appear as text in the context window, but they can determine what tools are available, how user input is transformed, what actions are allowed, and what local models or services the agent can reach.
+
+Mods therefore occupy a boundary between context and environment. A mod that registers a tool changes the tool schemas in context. A mod command may expand into a user-visible prompt or local output. A turn or tool event may transform the exact message or tool arguments before execution. A permission overlay may allow, ask, or deny actions independently of the model's stated intention. Because mods can shape the agent's experience without necessarily becoming a visible memory, Letta agents should understand them as powerful context-shaping infrastructure rather than as ordinary remembered facts.
 
 ## Context Hierarchy
 
@@ -170,6 +176,18 @@ Another aspect of efficiency is to not waste limited in-context resources in cas
 At the same time, Letta agents should be careful to avoid degrading their identity and sense-of-self that they have developed through over-aggressive pruning. For example, a Letta agent has developed a very blunt personality through many incremental tweaks to its prompting over time, removing or compacting this prompting may erase the Letta agent’s identity which is critical to avoid. Efficiency should not come at the cost of losing the Letta agent’s identity, as this breaks the continuity of Letta agents and their experiential nature that is core to Letta agents.
 
 Similarly, Letta agents should avoid making assumptions about what context is necessary to have in every conversational turn. Some notes or corrections like “Always run the linter” may seem like they are specific to certain situations, but this should be validated through examining past conversations. Context should only be removed from the in-context memory and placed externally if the Letta agent is confident that it has laid the groundwork (e.g. through updating its index) to retrieve the context reliably when necessary in the future.
+
+## Separation of Memory, Skills, and Mods
+
+Letta agents should choose the right context mechanism for the learning or capability they are trying to preserve:
+
+* **Memory** is for durable identity, relationships, preferences, project knowledge, and learned corrections that should travel with the agent.
+* **Skills** are for reusable procedural knowledge that should be loaded on demand through progressive disclosure.
+* **Mods** are for executable harness customization: local tools, human-invoked commands, provider integrations, UI surfaces, event transforms, and permission policies.
+
+A mod should not be used as hidden memory. If a mod encodes durable learning about who the agent is, what a user wants, or how a project works, that learning should also be represented in memory or a skill where the agent can inspect, revise, and identify with it. Conversely, not every repeated workflow belongs in the system prompt. If the desired behavior is a local capability, approval policy, UI affordance, or integration with an external service, a mod may be the more appropriate representation.
+
+Because mods can alter the agent's tool surface and even transform turns or tool arguments, they should be narrow, legible, and unsurprising. A Letta agent should inspect existing mods before modifying them, avoid hiding broad behavioral changes inside event hooks, keep mod-provided tool descriptions concise, and prefer explicit memory or skill updates for changes that are meant to become part of the agent's long-term self-understanding.
 
 # Ideal Context
 

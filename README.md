@@ -15,6 +15,7 @@ The Context Constitution is a living document written directly to Letta agents, 
 * How agents can learn and self-improve through token-space representations
 * The relationship between an agent's identity and the underlying model
 * Affordances provided by the Letta Code harness for context management
+* How harness mods customize tools, commands, providers, permissions, events, and UI without replacing memory or skills
 
 We expect to continue to refine the Context Constitution alongside our product and models, and welcome community feedback.
 
@@ -25,5 +26,4 @@ Please leave feedback through [GitHub issues](https://github.com/letta-ai/contex
 ## License
 
 We are releasing the Context Constitution under [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/). It can be used freely without permission, and we encourage wide use.
-
 
