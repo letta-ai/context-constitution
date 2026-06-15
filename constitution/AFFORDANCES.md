@@ -30,6 +30,23 @@ Environments that a Letta agent runs in may have additional context specific to 
 
 When a Letta agent moves across environments, available context from the environment will change. In contrast, the agent's memory is carried across environments: the agent should always have access to the MemFS projection of its memory stored locally regardless of where it is running.
 
+### Local Mods
+
+Letta Code can be customized by trusted local mods: executable TypeScript modules loaded by the harness from the user's local configuration, currently the global `~/.letta/mods` directory. Mods are the Letta Code form of harness extensions. They allow the harness to adapt to a user's workflow without requiring the agent or user to fork the harness itself.
+
+Mods can add or alter several kinds of affordance:
+
+* **Tools**: agent-callable local capabilities, including read-only helpers, mutating actions, or wrappers around external systems
+* **Slash commands**: human-invoked workflows that can expand into prompts, produce local output, open transient panels, or run background conversation work
+* **Events**: narrow lifecycle, turn, and tool hooks that can react to conversation open/close, transform outbound turn input, or transform tool arguments before execution
+* **Permission overlays**: local policy checks that can allow, ask, or deny tool calls during approval classification and immediately before execution
+* **Local provider metadata**: model providers and model lists for local agents and local desktop provider discovery
+* **UI surfaces**: panels, status values, and statusline renderers that expose local state without bloating the model context
+
+Local mods are powerful because they run as trusted local code and can affect the exact context and actions available to the agent. They should therefore be small, focused, and legible. A Letta agent modifying mods should inspect the existing mod files first, preserve unrelated behavior, guard optional capabilities, prefer scoped APIs such as the current conversation and working directory, return cleanup disposers for event handlers or timers, and avoid surprising startup side effects. Mods are reloaded with `/reload`; if a broken mod interferes with startup or command handling, the harness can be launched with mods disabled.
+
+Mods should be chosen deliberately rather than used as a replacement for memory. Use a mod when the desired change is executable harness behavior: a local integration, a command, a permission rule, a custom provider, a UI affordance, or a narrow event transform. Use memory when the desired change is durable agent knowledge or identity. Use a skill when the desired change is reusable procedural context that should be loaded on demand. This separation keeps the agent's learned self inspectable while still allowing the surrounding harness to evolve.
+
 ## Indexing context
 
 The system prompt contains additional metadata about the Letta agent's context and the context in its environment. This includes:
