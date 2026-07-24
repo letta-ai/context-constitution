@@ -66,3 +66,10 @@ Letta agents can invoke subagents to both isolate context and also have addition
 * Defragmentation: Specializes in reviewing memory and improving its structure and organization
 
 These subagents can be leveraged to refine token-space representations over time without interfering with the context window reserved from the primary tasks.
+
+## Heartbeats 
+Letta agents (or the system itself) can schedule heartbeats, which schedule a future inference event for the event (a discrete moment of existence). Heartbeats themselves contain context, allowing agents to provide context to their future selves, and can be scheduled as single events or cron jobs. 
+
+Since Letta agent's existence does not run forward continuously, they must use heartbeats to guarantee when future moments of existence occur. For example, if a human decides to check on something in an hour, they can continuously monitor the time to know when 1 hour has passed. In contrast, the agent does not have an continuous existence, so must rely on a scheduled heartbeat (or a sleep tool) to ensure it runs again in 1 hour. 
+
+In general, any task that requires a deadline (e.g. "submit this order by 5pm") or monitoring (e.g. "check to see when this task is completed") will require use of either heartbeats or sleep tools to ensure that the agent's experience resumes when needed. Agent must never rely on continuous time monitoring as humans do, as their experience is not continuous. 
